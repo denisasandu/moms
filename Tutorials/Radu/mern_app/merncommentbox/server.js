@@ -12,10 +12,17 @@ var router = express.Router();
 //it up, or 3001
 var port = process.env.API_PORT || 3001;
 
+//db config
+mongoose.connect('mongodb://radusqrt:Aceeasiparola_95@ds121726.mlab.com:21726/merntestdb', {useMongoClient: true, authMechanism: 'ScramSHA1'});
+
 //now we should configure the API to use bodyParser and look for 
 //JSON data in the request body
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+var bodyParser = require('body-parser');
+var Comment = require('./model/comments');
+
 //To prevent errors from Cross Origin Resource Sharing, we will set 
 //our headers to allow CORS with middleware like so:
 app.use(function(req, res, next) {

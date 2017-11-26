@@ -5,12 +5,7 @@ import style from './style';
 class CommentForm extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      author: '',
-      text: ''
-    };
-
+    this.state = { author: '', text: '' };
     this.handleAuthorChange = this.handleAuthorChange.bind(this);
     this.handleTextChange = this.handleTextChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -26,10 +21,15 @@ class CommentForm extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    console.log(`${this.state.author} said “${this.state.text}”`)
-    //we will be tying this into the POST method in a bit
-  }
+    let author = this.state.author.trim();
+    let text = this.state.text.trim();
+    if (!text || !author) {
+      return;
+    }
+    this.props.onCommentSubmit({ author: author, text: text });
+    this.setState({ author: '', text: '' });
   
+  }
   render() {
     return (
       <form style={style.commentForm} onSubmit={this.handleSubmit}>
@@ -53,4 +53,5 @@ class CommentForm extends Component {
     )
   }
 }
+
 export default CommentForm;
